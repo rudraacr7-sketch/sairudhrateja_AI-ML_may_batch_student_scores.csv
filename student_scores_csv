@@ -1,0 +1,57 @@
+import numpy as np
+import pandas as pd
+
+
+from google.colab import files
+uploaded = files.upload()
+
+
+# Load dataset
+df = pd.read_csv("student_scores.csv")
+
+# See actual column names
+print("Columns in dataset:")
+print(df.columns)
+
+# Remove extra spaces in column names
+df.columns = df.columns.str.strip()
+
+# Use correct column name from your CSV
+math_scores = df["math_score"].values
+# If your column is MathScore or Maths or math marks,
+# replace "math_score" with that exact name
+
+print("\nMath Scores Array:")
+print(math_scores)
+
+# Statistics
+print("\nMean:", np.mean(math_scores))
+print("Median:", np.median(math_scores))
+print("Maximum:", np.max(math_scores))
+print("Minimum:", np.min(math_scores))
+
+# Normalize
+normalized = (math_scores - np.min(math_scores)) / (
+    np.max(math_scores) - np.min(math_scores)
+)
+
+print("\nNormalized Scores:")
+print(normalized)
+
+# First 5 rows
+print("\nFirst 5 rows:")
+print(df.head())
+
+# Data types
+print("\nData Types:")
+print(df.dtypes)
+
+# Missing values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill missing values
+df.fillna(df.mean(numeric_only=True), inplace=True)
+
+print("\nSummary Statistics:")
+print(df.describe())
